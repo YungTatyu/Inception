@@ -4,7 +4,7 @@ RM	:= rm -f
 all: build
 
 build:
-	docker build -t ${IMAGE_NAME} .
+	docker build --no-cache -t ${IMAGE_NAME} .
 
 run: build
 	docker run -it ${IMAGE_NAME}
