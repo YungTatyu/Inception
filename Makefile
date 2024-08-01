@@ -3,14 +3,20 @@ RM	:= rm -f
 
 all: build
 
+re: down build
+
 build:
-	docker build --no-cache -t ${IMAGE_NAME} .
+	# docker build --no-cache -t ${IMAGE_NAME} .
+	docker compose up -d --build
 
 run: build
-	docker run -it ${IMAGE_NAME}
+	# docker run -it ${IMAGE_NAME}
 
 clean:
-	${RM} ${IMAGE_NAME}
+	# ${RM} ${IMAGE_NAME}
+
+down:
+	docker compose down --rmi all --volumes
 
 
 .PHONY : all build run clean fclean
