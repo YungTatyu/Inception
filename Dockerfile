@@ -5,7 +5,16 @@ FROM alpine:latest
 
 RUN apk update && apk add --no-cache \
     bash \
-    vim
+    vim \
+    curl \
+    nginx
+
+RUN wget https://wordpress.org/latest.tar.gz && \
+    tar -xzvf latest.tar.gz && \
+    mkdir -p /var/www/html/ && \
+    mv /wordpress/ /var/www/html/
+
+COPY nginx.conf /etc/nginx/nginx.conf
 
 CMD ["/bin/bash"]
 
