@@ -14,6 +14,10 @@ RUN wget https://wordpress.org/latest.tar.gz && \
     mkdir -p /var/www/html/ && \
     mv /wordpress/ /var/www/html/
 
+RUN apk add --no-cache \
+    mariadb \
+    php-fpm
+
 COPY nginx.conf /etc/nginx/nginx.conf
 
 CMD ["/bin/bash"]
