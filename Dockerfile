@@ -19,6 +19,7 @@ RUN apk add --no-cache \
     php-fpm
 
 COPY nginx.conf /etc/nginx/nginx.conf
+COPY www.conf /etc/php83/php-fpm.d/www.conf
 
 CMD ["/bin/bash"]
 
