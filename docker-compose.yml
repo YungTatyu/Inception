@@ -3,11 +3,12 @@ services:
   main:
     stdin_open: true
     tty: true
-    build: .
+    build:
+      context: .
     ports:
       - 80:80
     container_name: main
     # privileged: true
-    tmpfs:
-      - /tmp
-      - /run
+    # tmpfs:
+    #   - /tmp
+    #   - /run

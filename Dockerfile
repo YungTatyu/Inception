@@ -21,6 +21,10 @@ RUN apk add --no-cache \
 
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY www.conf /etc/php83/php-fpm.d/www.conf
+COPY init.sh /usr/bin/init.sh
+
+RUN mkdir /run/mariadb
+RUN bash /usr/bin/init.sh
 
 CMD ["/bin/bash"]
 
