@@ -4,6 +4,7 @@ FROM alpine:latest
 # USER user
 
 RUN apk update && apk add --no-cache \
+    openrc \
     bash \
     vim \
     curl \
