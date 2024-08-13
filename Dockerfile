@@ -8,7 +8,8 @@ RUN apk update && apk add --no-cache \
     bash \
     vim \
     curl \
-    nginx
+    nginx \
+    networkmanager
 
 RUN wget https://wordpress.org/latest.tar.gz && \
     tar -xzvf latest.tar.gz && \
@@ -23,8 +24,7 @@ COPY nginx.conf /etc/nginx/nginx.conf
 COPY www.conf /etc/php83/php-fpm.d/www.conf
 COPY init.sh /usr/bin/init.sh
 
-RUN mkdir /run/mariadb
 RUN bash /usr/bin/init.sh
 
-CMD ["/bin/bash"]
+CMD ["/sbin/init"]
 
