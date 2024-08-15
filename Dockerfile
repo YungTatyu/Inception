@@ -29,7 +29,5 @@ COPY init.sh /usr/bin/init.sh
 
 RUN bash /usr/bin/init.sh
 
-# CMD ["/lib/systemd/systemd"]
-# CMD ["/usr/bin/bash"]
 CMD ["/usr/bin/systemd"]
 
