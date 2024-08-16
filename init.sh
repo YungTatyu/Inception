@@ -9,8 +9,8 @@ start_service() {
   local timeout=$2
   local start_time=$(date +%s) #time in seconds sicne epoch
  
-  systemctl start ${service} || return 1
-  while ! systemctl status ${service}; do
+  service ${service} start || return 1
+  while ! service ${service} status; do
     echo "waiting ${service} to start"
     sleep 0.5
     local cur_time=$(date +%s)
@@ -25,7 +25,7 @@ start_service() {
 
 stop_service() {
   local service=$1
-  systemctl stop ${service}
+  service ${service} stop
   return 0
 }
 
@@ -39,7 +39,7 @@ init_mariadb() {
 }
 
 main() {
-  start_service mariadb 5
+  start_service mariadb 5 || return 1
   init_mariadb
   stop_service mariadb
 
