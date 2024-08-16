@@ -7,7 +7,8 @@ start_services() {
 init_mariadb() {
   mariadb -e "CREATE DATABASE wordpress;"
   mariadb -e "CREATE USER 'wp'@'%' IDENTIFIED BY 'wp';"
-  mariadb -e "GRANT ALL PRIVILEGES ON wordpress.* TO 'wp'@'%' IDENTIFIED BY 'wp';"
+  mariadb -e "GRANT ALL PRIVILEGES ON wordpress.* TO 'wp'@'%';"
+  mariadb -e "FLUSH PRIVILEGES;"
   return 0
 }
 
