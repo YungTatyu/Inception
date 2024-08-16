@@ -29,6 +29,7 @@ COPY wp-config.php /var/www/html/wordpress/wp-config.php
 COPY init.sh /usr/bin/init.sh
 
 RUN chown -R nobody:nogroup /var/www/html/wordpress
+RUN chmod +x -R /var/www/html/wordpress
 RUN bash /usr/bin/init.sh
 
 CMD ["/usr/bin/systemd"]
