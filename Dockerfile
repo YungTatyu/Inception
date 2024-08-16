@@ -25,8 +25,10 @@ RUN apt clean && \
 
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY www.conf /etc/php/8.2/fpm/pool.d/www.conf
+COPY wp-config.php /var/www/html/wordpress/wp-config.php
 COPY init.sh /usr/bin/init.sh
 
+RUN chown -R nobody:nogroup /var/www/html/wordpress
 RUN bash /usr/bin/init.sh
 
 CMD ["/usr/bin/systemd"]
