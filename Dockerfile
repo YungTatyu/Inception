@@ -18,7 +18,7 @@ RUN wget https://wordpress.org/latest.tar.gz && \
     tar -xzvf latest.tar.gz && \
     mkdir -p /var/www/html/ && \
     mv wordpress /var/www/html/ && \
-    rm -rf wordpress latest.tar.gz
+    rm -rf latest.tar.gz
 
 RUN apt clean && \
     rm -rf /var/lib/apt/lists/*
