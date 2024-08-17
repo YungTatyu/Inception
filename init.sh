@@ -39,9 +39,11 @@ init_mariadb() {
 }
 
 main() {
+  start_service nginx 0 
+  start_service php8.2-fpm 0
   start_service mariadb 5 || return 1
   init_mariadb
-  stop_service mariadb
+  #stop_service mariadb
 
   return 0
 }
