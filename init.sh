@@ -30,6 +30,10 @@ stop_service() {
 }
 
 init_mariadb() {
+  if [ ! -e /var/log/mysql ]; then
+    mkdir -m 2750 /var/log/mysql
+    chown mysql /var/log/mysql
+  fi
   mariadb -e "
     -- データベースが存在しない場合のみ作成
     CREATE DATABASE IF NOT EXISTS wordpress;
