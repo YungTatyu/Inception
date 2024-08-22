@@ -1,5 +1,7 @@
 #! /usr/bin/bash
 
+readonly WP_PATH='/var/www/html/wordpress'
+
 err() {
   echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $*" >&2
 }
@@ -51,7 +53,8 @@ init_mariadb() {
 }
 
 init_wordpress() {
- wp core install --allow-root --path='/var/www/html/wordpress/' --title='inception' --admin_user='tt' --admin_password='tt' --admin_email='wp@wp.com' --url='localhost'  
+ wp core install --allow-root --path=${WP_PATH} --title='inception' --admin_user='tt' --admin_password='tt' --admin_email='wp@wp.com' --url='localhost'  
+ wp user create usr usr@usr.com --role=subscriber --user_pass=usr --allow-root --path=${WP_PATH}
 }
 
 main() {
