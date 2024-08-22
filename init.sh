@@ -50,11 +50,16 @@ init_mariadb() {
   return 0
 }
 
+init_wordpress() {
+ wp core install --allow-root --path='/var/www/html/wordpress/' --title='inception' --admin_user='tt' --admin_password='tt' --admin_email='wp@wp.com' --url='localhost'  
+}
+
 main() {
   start_service nginx 0
   start_service php8.2-fpm 0
   start_service mariadb 5 || return 1
   init_mariadb
+  init_wordpress
   #stop_service mariadb
 
   return 0
