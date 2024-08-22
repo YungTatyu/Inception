@@ -9,8 +9,16 @@ services:
       - 80:80
     container_name: main
     volumes:
-      - /home/tterao/data/mysql:/var/lib/mysql
+      - mysql_volume:/var/lib/mysql
     #privileged: true
     # tmpfs:
     #   - /tmp
     #   - /run
+ 
+volumes:
+  mysql_volume:
+    driver: local
+    driver_opts:
+      type: none
+      device: "/home/tterao/data/mysql"
+      o: bind
