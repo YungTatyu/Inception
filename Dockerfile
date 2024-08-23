@@ -12,7 +12,8 @@ RUN apt update && apt install -y --no-install-recommends \
     ca-certificates \
     mariadb-server \
     php-fpm \
-    php-mysql
+    php-mysql \
+    openssl
 
 RUN wget https://wordpress.org/latest.tar.gz && \
     tar -xzvf latest.tar.gz && \
