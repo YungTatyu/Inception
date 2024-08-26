@@ -32,6 +32,7 @@ COPY nginx.conf /etc/nginx/nginx.conf
 COPY www.conf /etc/php/8.2/fpm/pool.d/www.conf
 COPY wp-config.php /var/www/html/wordpress/wp-config.php
 COPY 50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
+COPY supervisord.conf /etc/supervisor/supervisord.conf
 COPY init.sh /usr/bin/init.sh
 
 RUN chmod +x -R /var/www/html/wordpress
@@ -39,5 +40,5 @@ RUN chmod +x -R /var/www/html/wordpress
 RUN chown -R www-data:www-data /var/www/html/wordpress
 RUN bash /usr/bin/init.sh
 
-CMD ["/usr/bin/bash"]
+CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]
 
