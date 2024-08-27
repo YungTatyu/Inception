@@ -11,6 +11,7 @@ services:
     container_name: main
     volumes:
       - mysql_volume:/var/lib/mysql
+    init: true
     #privileged: true
     # tmpfs:
     #   - /tmp
