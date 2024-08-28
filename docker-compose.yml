@@ -11,6 +11,7 @@ services:
     container_name: main
     volumes:
       - mysql_volume:/var/lib/mysql
+      - wp_volume:/var/www/html/wordpress
     init: true
     #privileged: true
     # tmpfs:
@@ -23,4 +24,10 @@ volumes:
     driver_opts:
       type: none
       device: "/home/tt/data/mysql"
+      o: bind
+  wp_volume:
+    driver: local
+    driver_opts:
+      type: none
+      device: "/home/tt/data/wp"
       o: bind
