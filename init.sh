@@ -38,13 +38,13 @@ init_mariadb() {
   fi
   mariadb -e "
     -- データベースが存在しない場合のみ作成
-    CREATE DATABASE IF NOT EXISTS wordpress;
+    CREATE DATABASE IF NOT EXISTS ${MARIADB_NAME};
 
     -- ユーザーが存在しない場合のみ作成
-    CREATE USER IF NOT EXISTS 'wp'@'%' IDENTIFIED BY 'wp';
+    CREATE USER IF NOT EXISTS '${MARIADB_USER}'@'%' IDENTIFIED BY '${MARIADB_USER}';
     
     -- ユーザーに権限を付与
-    GRANT ALL PRIVILEGES ON wordpress.* TO 'wp'@'%';
+    GRANT ALL PRIVILEGES ON ${MARIADB_NAME}.* TO '${MARIADB_USER}'@'%';
     
     -- 変更を有効化
     FLUSH PRIVILEGES;
@@ -53,8 +53,8 @@ init_mariadb() {
 }
 
 init_wordpress() {
- wp core install --allow-root --path=${WP_PATH} --title='inception' --admin_user='tt' --admin_password='tt' --admin_email='wp@wp.com' --url='localhost'  
- wp user create usr usr@usr.com --role=subscriber --user_pass=usr --allow-root --path=${WP_PATH}
+ wp core install --allow-root --path=${WP_PATH} --title='${WP_TITLE}' --admin_user='${WP_ADMIN_NAME}' --admin_password='${WP_ADMIN_PASSWORD}' --admin_email='${WP_ADMIN_EMAIL}' --url='${DOMAIN_NAME}'  
+ wp user create ${WP_USER_NAME} ${WP_USER_EMAIL} --role=subscriber --user_pass=${WP_USER_PASSWORD} --allow-root --path=${WP_PATH}
 }
 
 generate_certificate() {
