@@ -13,7 +13,8 @@ services:
       - mysql_volume:/var/lib/mysql
       - wp_volume:/var/www/html/wordpress
     init: true
-    #privileged: true
+    env_file:
+      - ./.env
     # tmpfs:
     #   - /tmp
     #   - /run
