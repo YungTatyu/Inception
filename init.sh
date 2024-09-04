@@ -33,12 +33,10 @@ stop_service() {
 }
 
 init_mariadb() {
-  echo setup mariadb
   if [ ! -e /var/log/mysql ]; then
     mkdir -m 2750 /var/log/mysql
     chown mysql /var/log/mysql
   fi
-  echo create table
   mariadb -e "
     -- データベースが存在しない場合のみ作成
     CREATE DATABASE IF NOT EXISTS ${MARIADB_NAME};
@@ -51,14 +49,14 @@ init_mariadb() {
     
     -- 変更を有効化
     FLUSH PRIVILEGES;
-  " || {err "failed to setup mariadb"; return 1}
+  " || { err "failed to setup mariadb"; return 1; }
   return 0
 }
 
 init_wordpress() {
- wp core install --allow-root --path=${WP_PATH} --title='${WP_TITLE}' --admin_user='${WP_ADMIN_NAME}' --admin_password='${WP_ADMIN_PASSWORD}' --admin_email='${WP_ADMIN_EMAIL}' --url='${DOMAIN_NAME}'  
+ wp config create --dbname=${MARIADB_NAME} --dbuser=${MARIADB_USER} --dbpass=${MARIADB_PASSWORD} --dbhost=localhost --path=${WP_PATH} --allow-root
+ wp core install --allow-root --path=${WP_PATH} --title=${WP_TITLE} --admin_user=${WP_ADMIN_NAME} --admin_password=${WP_ADMIN_PASSWORD} --admin_email=${WP_ADMIN_EMAIL} --url=${DOMAIN_NAME}  
  wp user create ${WP_USER_NAME} ${WP_USER_EMAIL} --role=subscriber --user_pass=${WP_USER_PASSWORD} --allow-root --path=${WP_PATH}
- wp config create --dbname=${MARIADB_NAME} --dbuser=${MARIADB_USER} --dbpass=${MARIADB_PASSWORD} --dbhost=${DOMAIN_NAME} --path=${WP_PATH} --allow-root 
 }
 
 generate_certificate() {
@@ -70,15 +68,15 @@ generate_certificate() {
 }
 
 main() {
-  echo main start
+  cd ${WP_PATH}
   generate_certificate
   start_service nginx 0
-  start_service php8.2-fpm 0
   start_service mariadb 5 
-  echo service started
+  start_service php8.2-fpm 0
   init_mariadb
   init_wordpress
 
+  bash
   return 0
 }
 

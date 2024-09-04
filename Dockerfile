@@ -36,7 +36,8 @@ COPY init.sh /usr/bin/init.sh
 RUN chmod +x -R /var/www/html/wordpress
 #RUN chown -R nobody:nogroup /var/www/html/wordpress
 RUN chown -R www-data:www-data /var/www/html/wordpress
-RUN bash /usr/bin/init.sh
 
-# CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]
+
+ENTRYPOINT ["docker-init", "--", "bash", "/usr/bin/init.sh"]
+
 
