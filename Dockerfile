@@ -29,15 +29,12 @@ RUN apt clean && \
 
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY www.conf /etc/php/8.2/fpm/pool.d/www.conf
-#COPY wp-config.php /var/www/html/wordpress/wp-config.php
 COPY 50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 COPY init.sh /usr/bin/init.sh
 
-RUN chmod +x -R /var/www/html/wordpress
-#RUN chown -R nobody:nogroup /var/www/html/wordpress
-RUN chown -R www-data:www-data /var/www/html/wordpress
+RUN chmod +x -R /var/www/html/wordpress; \
+    chmod +x /usr/bin/init.sh; \
+    chown -R www-data:www-data /var/www/html/wordpress
 
-
-ENTRYPOINT ["docker-init", "--", "bash", "/usr/bin/init.sh"]
-
+ENTRYPOINT ["/usr/bin/init.sh"]
 
