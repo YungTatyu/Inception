@@ -54,8 +54,7 @@ init_mariadb() {
 }
 
 init_wordpress() {
- cd ${WP_PATH}
- wp config create --dbname=${MARIADB_NAME} --dbuser=${MARIADB_USER} --dbpass=${MARIADB_PASSWORD} --dbhost=localhost --path=${WP_PATH} --allow-root
+ cd ${WP_PATH} && wp config create --dbname=${MARIADB_NAME} --dbuser=${MARIADB_USER} --dbpass=${MARIADB_PASSWORD} --dbhost=localhost --path=${WP_PATH} --allow-root
  wp core install --allow-root --path=${WP_PATH} --title=${WP_TITLE} --admin_user=${WP_ADMIN_NAME} --admin_password=${WP_ADMIN_PASSWORD} --admin_email=${WP_ADMIN_EMAIL} --url=${DOMAIN_NAME}  
  wp user create ${WP_USER_NAME} ${WP_USER_EMAIL} --role=subscriber --user_pass=${WP_USER_PASSWORD} --allow-root --path=${WP_PATH}
 }
@@ -64,7 +63,7 @@ generate_certificate() {
   if [[ -e /etc/nginx/tls ]]; then
     return 0
   fi
-  mkdir /etc/nginx/tls && openssl req -x509 -sha256 -nodes -newkey rsa:2048 -days 365 -keyout "${TLS_PATH}/domain.key" -out "${TLS_PATH}/domain.crt" -subj "/C=js/ST=tokyo/L=tokyo/O=tterao/OU=tterao/CN=tterao.42.fr/emailAddress=nginx@nginx.com" || return 1
+  mkdir /etc/nginx/tls && openssl req -x509 -sha256 -nodes -newkey rsa:2048 -days 365 -keyout "${TLS_PATH}/domain.key" -out "${TLS_PATH}/domain.crt" -subj "/C=${CF_COUNTRY_NAME}/ST=${CF_STATE_NAME}/L=${CF_CITY_NAME}/O=${CF_ORG_NAME}/OU=${CF_ORG_UNIT_NAME}/CN=${CF_COMMON_NAME}/emailAddress=${CF_EMAIL}" || return 1
   return 0
 }
 
