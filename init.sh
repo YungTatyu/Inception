@@ -54,6 +54,7 @@ init_mariadb() {
 }
 
 init_wordpress() {
+ cd ${WP_PATH}
  wp config create --dbname=${MARIADB_NAME} --dbuser=${MARIADB_USER} --dbpass=${MARIADB_PASSWORD} --dbhost=localhost --path=${WP_PATH} --allow-root
  wp core install --allow-root --path=${WP_PATH} --title=${WP_TITLE} --admin_user=${WP_ADMIN_NAME} --admin_password=${WP_ADMIN_PASSWORD} --admin_email=${WP_ADMIN_EMAIL} --url=${DOMAIN_NAME}  
  wp user create ${WP_USER_NAME} ${WP_USER_EMAIL} --role=subscriber --user_pass=${WP_USER_PASSWORD} --allow-root --path=${WP_PATH}
@@ -68,7 +69,6 @@ generate_certificate() {
 }
 
 main() {
-  cd ${WP_PATH}
   generate_certificate
   start_service nginx 0
   start_service mariadb 5 
