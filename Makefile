@@ -1,22 +1,25 @@
-IMAGE_NAME	:= alpine-image
-RM	:= rm -f
+DCCOMPOSE := docker compose
 
-all: build
+all: up
 
-re: down build
+re: down up
 
-build:
-	# docker build --no-cache -t ${IMAGE_NAME} .
-	docker compose up -d --build
+up:
+	${DCCOMPOSE} up -d --build
 
-run: build
-	# docker run -it ${IMAGE_NAME}
-
-clean:
-	# ${RM} ${IMAGE_NAME}
+run: up
 
 down:
-	docker compose down --rmi all --volumes
+	${DCCOMPOSE} down --rmi all --volumes
 
+clean: down
 
-.PHONY : all build run clean fclean
+fclean: clean
+
+start:
+	${DCCOMPOSE} start
+
+stop:
+	${DCCOMPOSE} stop
+
+.PHONY : all run clean fclean up start stop
