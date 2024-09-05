@@ -1,0 +1,34 @@
+version: '3'
+services:
+  main:
+    stdin_open: true
+    tty: true
+    build:
+      context: .
+    ports:
+      - 80:80
+      - 443:443
+    container_name: main
+    volumes:
+      - mysql_volume:/var/lib/mysql
+      - wp_volume:/var/www/html/wordpress
+    init: true
+    env_file:
+      - ./.env
+    # tmpfs:
+    #   - /tmp
+    #   - /run
+ 
+volumes:
+  mysql_volume:
+    driver: local
+    driver_opts:
+      type: none
+      device: "/home/tt/data/mysql"
+      o: bind
+  wp_volume:
+    driver: local
+    driver_opts:
+      type: none
+      device: "/home/tt/data/wp"
+      o: bind
