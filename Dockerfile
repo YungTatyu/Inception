@@ -30,11 +30,11 @@ RUN apt clean && \
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY www.conf /etc/php/8.2/fpm/pool.d/www.conf
 COPY 50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
-COPY init.sh /usr/bin/init.sh
+COPY entrypoint.sh /usr/bin/entrypoint.sh
 
 RUN chmod +x -R /var/www/html/wordpress; \
-    chmod +x /usr/bin/init.sh; \
+    chmod +x /usr/bin/entrypoint.sh; \
     chown -R www-data:www-data /var/www/html/wordpress
 
-ENTRYPOINT ["/usr/bin/init.sh"]
+ENTRYPOINT ["/usr/bin/entrypoint.sh"]
 
