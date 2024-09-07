@@ -1,0 +1,52 @@
+version: '3'
+services:
+  #nginx:
+  #  stdin_open: true
+  #  tty: true
+  #  build:
+  #    context: .
+  #  ports:
+  #    - 443:443
+  #  container_name: nginx
+  #  volumes:
+  #    - mysql_volume:/var/lib/mysql
+  #    - wp_volume:/var/www/html/wordpress
+  #  init: true
+  #  env_file:
+  #    - ./.env
+    # tmpfs:
+    #   - /tmp
+    #   - /run
+ 
+  nginx:
+    stdin_open: true
+    tty: true
+    build:
+      context: ./nginx
+      dockerfile: ./nginx/Dockerfile
+    ports:
+      - 443:443
+    container_name: nginx
+    init: true
+    env_file:
+      - ./.env
+    networks:
+      - app_network
+
+volumes:
+  mysql_volume:
+    driver: local
+    driver_opts:
+      type: none
+      device: "/home/tt/data/mysql"
+      o: bind
+  wp_volume:
+    driver: local
+    driver_opts:
+      type: none
+      device: "/home/tt/data/wp"
+      o: bind
+
+networks:
+  app_network:
+    driver: bridge
