@@ -11,7 +11,7 @@ RUN apt clean && \
     rm -rf /var/lib/apt/lists/*
 
 COPY conf/nginx.conf /etc/nginx/nginx.conf
-COPY entrypoint.sh /usr/bin/entrypoint.sh
+COPY tools/entrypoint.sh /usr/bin/entrypoint.sh
 
 RUN chmod +x /usr/bin/entrypoint.sh
 

@@ -23,7 +23,6 @@ services:
     tty: true
     build:
       context: ./nginx
-      dockerfile: ./nginx/Dockerfile
     ports:
       - 443:443
     container_name: nginx
