@@ -32,6 +32,20 @@ services:
     networks:
       - app_network
 
+  wordpress:
+    stdin_open: true
+    tty: true
+    build:
+      context: ./wordpress
+    container_name: wordpress
+    volumes:
+      - wp_volume:/var/www/html/wordpress
+    init: true
+    env_file:
+      - ./.env
+    networks:
+      - app_network
+
 volumes:
   mysql_volume:
     driver: local
