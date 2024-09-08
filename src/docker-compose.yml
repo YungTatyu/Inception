@@ -1,23 +1,5 @@
 version: '3'
 services:
-  #nginx:
-  #  stdin_open: true
-  #  tty: true
-  #  build:
-  #    context: .
-  #  ports:
-  #    - 443:443
-  #  container_name: nginx
-  #  volumes:
-  #    - mysql_volume:/var/lib/mysql
-  #    - wp_volume:/var/www/html/wordpress
-  #  init: true
-  #  env_file:
-  #    - ./.env
-    # tmpfs:
-    #   - /tmp
-    #   - /run
- 
   nginx:
     stdin_open: true
     tty: true
@@ -40,6 +22,20 @@ services:
     container_name: wordpress
     volumes:
       - wp_volume:/var/www/html/wordpress
+    init: true
+    env_file:
+      - ./.env
+    networks:
+      - app_network
+
+  mariadb:
+    stdin_open: true
+    tty: true
+    build:
+      context: ./mariadb
+    container_name: mariadb
+    volumes:
+      - mysql_volume:/var/lib/mysql
     init: true
     env_file:
       - ./.env
