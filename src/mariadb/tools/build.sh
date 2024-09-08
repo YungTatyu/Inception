@@ -4,6 +4,23 @@ err() {
   echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $*" >&2
 }
 
+start_service() {
+  local timeout=$1
+  local start_time=$(date +%s) #time in seconds sicne epoch
+
+  service mariadb start || return 1
+  # wait till mariadb is ready
+  while ! mysqladmin ping --silent; do
+    sleep 0.5
+    local cur_time=$(date +%s)
+    if ((cur_time - start_time > timeout)); then
+      return 1
+    fi
+  done
+
+  return 0
+}
+
 setup_mariadb() {
   if [ ! -e /var/log/mysql ]; then
     mkdir -m 2750 /var/log/mysql
@@ -26,7 +43,7 @@ setup_mariadb() {
 }
 
 main() {
-  service mariadb start || { err "failed to start mariadb"; return 1; }
+  start_service 10 || { err "failed to start mariadb"; return 1; }
   setup_mariadb || return 1
   service mariadb stop
   return 0
