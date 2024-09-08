@@ -16,7 +16,7 @@ generate_certificate() {
 
 main() {
   generate_certificate || return 1
-  nginx -g 'daemon off;'
+  nginx -g 'daemon off;' || { err "failed to start nginx"; return 1; }
   return 0
 }
 
