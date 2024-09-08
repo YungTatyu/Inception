@@ -14,9 +14,9 @@ return 0
 }
 
 main() {
-  setup_wordpress || return 1
-
-  bash
+  service php8.2-fpm start || { err "failed to start php-fpm"; return 1; }
+  setup_wordpress || { err "failed to setup wordpress"; return 1; }
+  php-fpm8.2 -F
   return 0
 }
 
