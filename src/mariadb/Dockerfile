@@ -8,10 +8,15 @@ RUN apt update && apt install -y --no-install-recommends \
 RUN apt clean && \
     rm -rf /var/lib/apt/lists/*
 
+ARG MARIADB_ROOT_PASSWORD
+ARG MARIADB_NAME
+ARG MARIADB_USER
+ARG MARIADB_PASSWORD
+
 COPY conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
-COPY tools/entrypoint.sh /usr/bin/entrypoint.sh
+COPY tools/build.sh /usr/bin/build.sh
 
-RUN chmod +x /usr/bin/entrypoint.sh
+RUN chmod +x /usr/bin/build.sh && /usr/bin/build.sh
 
-ENTRYPOINT ["/usr/bin/entrypoint.sh"]
+ENTRYPOINT ["mariadbd"]
 

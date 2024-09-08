@@ -37,6 +37,11 @@ services:
     tty: true
     build:
       context: ./mariadb
+      args:
+        MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+        MARIADB_NAME: ${MARIADB_NAME}
+        MARIADB_USER: ${MARIADB_USER}
+        MARIADB_PASSWORD: ${MARIADB_PASSWORD}
     container_name: mariadb
     volumes:
       - mysql_volume:/var/lib/mysql

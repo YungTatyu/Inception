@@ -11,7 +11,7 @@ up:
 run: up
 
 down:
-	${DCCOMPOSE} down --rmi all --volumes
+	${DCCOMPOSE} down --rmi all --volumes --remove-orphans
 
 clean: down
 
