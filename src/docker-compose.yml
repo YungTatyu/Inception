@@ -55,13 +55,13 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: "/home/tt/data/mysql"
+      device: "/home/${USER}/data/mysql"
       o: bind
   wp_volume:
     driver: local
     driver_opts:
       type: none
-      device: "/home/tt/data/wp"
+      device: "/home/${USER}/data/wp"
       o: bind
 
 networks:
