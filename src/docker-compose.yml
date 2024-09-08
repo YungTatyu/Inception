@@ -8,6 +8,8 @@ services:
     ports:
       - 443:443
     container_name: nginx
+    volumes:
+      - wp_volume:/var/www/html/wordpress
     init: true
     env_file:
       - ./.env
@@ -27,6 +29,8 @@ services:
       - ./.env
     networks:
       - app_network
+    depends_on:
+      - mariadb
 
   mariadb:
     stdin_open: true
@@ -41,6 +45,10 @@ services:
       - ./.env
     networks:
       - app_network
+    healthcheck:
+      # wait build then setup wordpress
+      test: ["CMD-SHELL", "mysqladmin ping --silent"]
+      interval: 1s
 
 volumes:
   mysql_volume:
