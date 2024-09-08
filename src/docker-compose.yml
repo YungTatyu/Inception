@@ -1,8 +1,5 @@
-version: '3'
 services:
   nginx:
-    stdin_open: true
-    tty: true
     build:
       context: ./nginx
     ports:
@@ -15,10 +12,10 @@ services:
       - ./.env
     networks:
       - app_network
+    depends_on:
+      - wordpress
 
   wordpress:
-    stdin_open: true
-    tty: true
     build:
       context: ./wordpress
     container_name: wordpress
@@ -33,8 +30,6 @@ services:
       - mariadb
 
   mariadb:
-    stdin_open: true
-    tty: true
     build:
       context: ./mariadb
       args:
@@ -53,7 +48,6 @@ services:
     healthcheck:
       # wait build then setup wordpress
       test: ["CMD-SHELL", "mysqladmin ping --silent"]
-      interval: 1s
 
 volumes:
   mysql_volume:
