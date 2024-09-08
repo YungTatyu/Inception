@@ -14,8 +14,14 @@ generate_certificate() {
   return 0
 }
 
+setup_nginx() {
+  sed -i "s/\${DOMAIN_NAME}/${DOMAIN_NAME}/g" /etc/nginx/nginx.conf
+  return 0
+}
+
 main() {
   generate_certificate || return 1
+  setup_nginx
   nginx -g 'daemon off;' || { err "failed to start nginx"; return 1; }
   return 0
 }
