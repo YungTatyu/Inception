@@ -28,8 +28,7 @@ setup_mariadb() {
 main() {
   service mariadb start || { err "failed to start mariadb"; return 1; }
   setup_mariadb || return 1
-
-  bash
+  mariadb
   return 0
 }
 
