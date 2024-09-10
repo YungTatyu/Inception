@@ -1,4 +1,4 @@
-#! /usr/bin/bash
+#! /bin/bash
 
 readonly TLS_PATH="/etc/nginx/tls"
 

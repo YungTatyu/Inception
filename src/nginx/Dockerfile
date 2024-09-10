@@ -1,4 +1,4 @@
-FROM debian:stable-slim
+FROM debian:bullseye-slim
 
 RUN apt update && apt install -y --no-install-recommends \
     bash \
