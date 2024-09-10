@@ -1,4 +1,4 @@
-SRC_DIR := src
+SRC_DIR := srcs
 DCCOMPOSE := docker compose -f ${SRC_DIR}/docker-compose.yml
 
 all: up
