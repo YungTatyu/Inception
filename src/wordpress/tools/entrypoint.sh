@@ -1,4 +1,4 @@
-#! /usr/bin/bash
+#! /bin/bash
 
 readonly WP_PATH='/var/www/html/wordpress'
 
@@ -16,9 +16,17 @@ setup_wordpress() {
 return 0
 }
 
+# need this or fail to start php-fpm
+setup_phpfpm() {
+  service php7.4-fpm start 
+  service php7.4-fpm stop 
+  return 0
+}
+
 main() {
   setup_wordpress || { err "failed to setup wordpress"; return 1; }
-  php-fpm8.2 -F || { err "failed to start php-fpm"; return 1; }
+  setup_phpfpm
+  php-fpm7.4 -F || { err "failed to start php-fpm"; return 1; }
   return 0
 }
 

@@ -1,4 +1,4 @@
-FROM debian:bookworm-slim
+FROM debian:bullseye-slim
 
 RUN apt update && apt install -y --no-install-recommends \
     bash \
@@ -18,7 +18,7 @@ RUN curl -O https://wordpress.org/latest.tar.gz && \
     chmod +x wp-cli.phar && \
     mv wp-cli.phar /usr/local/bin/wp
 
-COPY conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
+COPY conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
 COPY tools/entrypoint.sh /usr/bin/entrypoint.sh
 
 RUN chmod +x -R /var/www/html/wordpress; \
