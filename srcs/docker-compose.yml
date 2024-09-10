@@ -1,7 +1,7 @@
 services:
   nginx:
     build:
-      context: ./nginx
+      context: ./requirements/nginx
     restart: always
     ports:
       - 443:443
@@ -18,7 +18,7 @@ services:
 
   wordpress:
     build:
-      context: ./wordpress
+      context: ./requirements/wordpress
     restart: always
     container_name: wordpress
     volumes:
@@ -33,7 +33,7 @@ services:
 
   mariadb:
     build:
-      context: ./mariadb
+      context: ./requirements/mariadb
       args:
         MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
         MARIADB_NAME: ${MARIADB_NAME}
