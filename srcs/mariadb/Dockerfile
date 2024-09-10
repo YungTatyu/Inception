@@ -13,9 +13,12 @@ ARG MARIADB_ROOT_PASSWORD \
 
 COPY conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 COPY tools/build.sh /usr/bin/build.sh
+COPY tools/entrypoint.sh /usr/bin/entrypoint.sh
 
 # need to setup while building a image because db has to be ready when wordpress access to db
-RUN chmod +x /usr/bin/build.sh && /usr/bin/build.sh
+RUN chmod +x /usr/bin/build.sh; \
+    chmod +x /usr/bin/entrypoint.sh; \
+    /usr/bin/build.sh
 
-ENTRYPOINT ["mariadbd"]
+ENTRYPOINT ["/usr/bin/entrypoint.sh"]
 
